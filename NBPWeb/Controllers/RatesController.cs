@@ -10,7 +10,6 @@ namespace NBPWeb.Controllers
         private readonly IExchangeReadService _readService;
         private readonly IExchangeTableImporter _importer;
         private readonly ILogger<RatesController> _log;
-
         public RatesController(
             IExchangeReadService readService,
             IExchangeTableImporter importer,

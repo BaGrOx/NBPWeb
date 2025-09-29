@@ -5,7 +5,7 @@ using NBPWebDatabase.Models;
 namespace NBPWebDatabase.Configurations
 {
     /// <summary>
-    /// Konfiguracja mapowania encji ExchangeRate (EF Core Fluent API).
+    /// Konfiguracja mapowania encji ExchangeRate.
     /// </summary>
     public class ExchangeRateConfiguration : IEntityTypeConfiguration<ExchangeRate>
     {
