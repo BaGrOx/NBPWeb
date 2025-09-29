@@ -9,7 +9,7 @@ Import działa **cyklicznie w tle** (HostedService) oraz **na żądanie** przyci
 - Podział na projekty: `NBPWeb` (UI), `NBPWebService` (logika), `NBPWebDatabase` (DbContext + migracje)
 
 ## Uruchomienie (skrót)
-1) Ustaw connection string w `NBPWeb/appsettings.json`:
+1) Ustaw odpowiedni connection string w `NBPWeb/appsettings.json`:
    ```json
    {
      "ConnectionStrings": {
