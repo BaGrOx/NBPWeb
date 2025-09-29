@@ -1,0 +1,5 @@
+﻿#Initial CLI on .sln
+dotnet ef migrations add Initial -p NBPWebDatabase -s NBPWeb
+
+#Update CLI on .sln
+dotnet ef database update [NazwaMigracji] -p NBPWebDatabase -s NBPWeb

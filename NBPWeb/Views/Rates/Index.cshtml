@@ -1,0 +1,72 @@
+﻿@model NBPWeb.Models.Rates.RatesPageViewModel?
+@{
+    ViewData["Title"] = "Kursy NBP – Tabela B";
+}
+
+<div class="container py-3">
+    <h1 class="mb-3 fw-semibold">Kursy NBP – Tabela @(Model?.Table ?? "B")</h1>
+
+    @if (TempData["SyncMsg"] is string msg)
+    {
+        <div class="alert alert-info d-flex align-items-center" role="alert">
+            <span class="me-2">ℹ️</span> <span>@msg</span>
+        </div>
+    }
+
+    <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+        <form asp-controller="Rates" asp-action="Sync" method="post" class="ms-0">
+            @Html.AntiForgeryToken()
+            <button class="btn btn-outline-secondary">Sprawdź i pobierz nowszą</button>
+        </form>
+    </div>
+
+    @if (Model is null)
+    {
+        <p class="text-muted">Brak danych w bazie. Użyj przycisku „Sprawdź i pobierz nowszą”.</p>
+    }
+    else
+    {
+        <p class="text-muted mb-2">
+            Nr: <strong>@Model.No</strong> •
+            Data: <strong>@Model.EffectiveDate</strong> •
+            Walut: <strong>@Model.Rates.Count</strong>
+        </p>
+
+        <div class="mb-2" style="max-width: 520px;">
+            <input id="q" class="form-control" placeholder="Filtruj po nazwie/kodzie…" />
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Waluta</th>
+                        <th style="width:120px">Kod</th>
+                        <th style="width:200px">Średni kurs (PLN)</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    @foreach (var r in Model.Rates)
+                    {
+                        <tr>
+                            <td>@r.Currency</td>
+                            <td class="fw-medium">@r.Code</td>
+                            <td>@r.Mid.ToString("0.0000")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<script>
+    (function () {
+        const q = document.getElementById('q');
+        const rows = Array.from(document.querySelectorAll('#tbody tr'));
+        q?.addEventListener('input', e => {
+            const f = (e.target.value || '').toLowerCase();
+            rows.forEach(tr => tr.style.display = tr.textContent.toLowerCase().includes(f) ? '' : 'none');
+        });
+    })();
+</script>
